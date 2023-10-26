@@ -1,0 +1,134 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{%static 'Ziscord.png'%}" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="UTF-8">
+        <title>
+           Ziscord Search
+        </title>
+        <style>
+        *{
+        box-sizing:border-box;
+        }
+            ::-webkit-scrollbar{
+    width:5px;
+    }
+
+    ::-webkit-scrollbar-thumb{
+        border-radius:3px;
+    }
+    ::-webkit-scrollbar-thumb:hover{
+        background: #000;
+    }
+            body{
+                background:#555;
+            }
+            aside{
+                background:#444;
+                width:30%;
+                float:left;
+                border-right: 2px groove;
+                height: 99vh;
+                overflow-y:scroll;
+            }
+            a{
+            color:black;
+            text-decoration:none;
+            }
+            input{
+                width:80%;
+                font-size: 20px;
+                margin-left:20px;
+                border:none;
+            }
+             button{
+                background: #8b7ad0;
+                font-size:30px;
+                color:white;
+                padding: 3px;
+                width:100%;
+                cursor:pointer;
+                transition:all 1.5s ease-in-out;
+                box-shadow:3px 3px 12px 1px inset #000;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            form{
+                border-bottom: 2px groove
+            }
+            button:hover{
+                background-color: aliceblue;
+                color:black;
+            }
+            input:focus{
+                outline: none;
+            }
+            .friend_img{
+            border-radius:500px;
+            border: 3px solid;
+            border-color: aquamarine;
+            }
+            @media only screen and (max-width:1100px){
+                aside{
+                    width:40%
+                }
+            }
+             @media only screen and (max-width:850px){
+                aside{
+                    width:45%
+                }
+            }
+            @media only screen and (max-width:650px){
+                aside{
+                    width:60%
+                }
+            }
+            @media only screen and (max-width:600px){
+                aside{
+                    width:100%
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <aside>
+            <header>
+                <form>
+                    <div style="width:90%;margin-left: 5%;margin-top:10px; background:white;border-radius: 20px; border:1px solid #000;padding:5px;">
+                {{filter.form.Searching_Name}}
+                        <img src="{%static 'search icon.png'%}" width="15" height="15" id="s_img">
+                        </div>
+                    <button type="submit">Search</button>
+                    </form>
+            </header>
+            <div style="margin-top: 20px;">
+                 {%for i in profiles%}
+            {%if i.count == 0%}
+            there are no users 😥
+            {%endif%}
+            {%if i != profile%}
+         <a href="/Ziscord/profile/{{i.slug}}/chat"> <div style="margin-top: 20px; border-right: 3px double #999;padding-right: 10px;">
+             {%if i.image != ""%}
+                <img src="{{i.image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'profileimg.png'%}'" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+             {%else%}
+                <img src="{%static 'profileimg.png'%}" width="50" height="50" class="friend_img" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+             {%endif%}
+              {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
+        <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}} {{i.user.last_name}}</h3>
+        <button style="font-size:20px;width:100%;" class="buttonA">add friend</button>
+        </div></a>
+            {%endif%}
+            {%endfor%}
+        </div>
+            </div>
+        </aside>
+        <script>
+            document.getElementById("id_Searching_Name").placeholder = "Search"
+            document.getElementById("id_Searching_Name").onkeyup = function(){
+                document.getElementById("s_img").style.display = "none"
+            }
+        </script>
+    </body>
+</html>

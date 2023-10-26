@@ -1,0 +1,183 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{%static 'Ziscord.png'%}" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="UTF-8">
+        <title>
+            Create group
+        </title>
+        <style>
+                    body{
+                background:#444;
+                background-attachment: fixed;
+                background-size: cover;
+                background-position: center;
+            }
+            .main_div{
+                background:#555;
+                width:35%;
+                margin-left:35%;
+                padding: 10px;
+                box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+                margin-top:15vh;
+                border:2px groove
+
+            }
+            input[type=file]{
+            height:97%;
+            position:absolute;
+            opacity:0;
+            z-index:1;
+            }
+            input{
+                display: block;
+                font-size: 20px;
+                font-family: andalus;
+                font-weight: bold;
+                width:100%;
+                margin-left:5%;
+                margin-bottom:5px;
+                border:inset;
+                border-style:groove;
+
+            }
+            header{
+                padding:20px;
+                font-size: 30px;
+                text-align: center;
+                color: aliceblue;
+                border-bottom:3px dashed #999;
+                margin-bottom: 20px;
+            }
+
+            button{
+                background: #8b7ad0;
+                font-size:30px;
+                color:white;
+                padding: 3px;
+                width:100%;
+                cursor:pointer;
+                transition:all 1.5s ease-in-out;
+                box-shadow:3px 3px 12px 1px inset #000;
+            }
+            button:hover{
+                background-color: aliceblue;
+                color:#000
+            }
+            .name{
+                width:150px;
+                display:inline-block;
+
+            }
+            #id_first_name{
+                float: left;
+                margin-left:4%
+            }
+            #id_last_name{
+                float: right;
+                margin-right: 4%;
+            }
+            a{
+               color:white
+            }
+            a:hover{
+                color:aquamarine;
+            }
+            a:active{
+                color:red;
+            }
+            @media only screen and (max-width:1500px){
+
+                .main_div{
+                    width:40%;
+                    margin-left:30%;
+                }
+
+            }
+             @media only screen and (max-width:1250px){
+
+                .main_div{
+                    width:45%;
+                    margin-left:25%;
+                }
+
+            }
+             @media only screen and (max-width:1100px){
+
+                .main_div{
+                    width:60%;
+                    margin-left:20%;
+                }
+
+            }
+            @media only screen and (max-width:850px){
+
+                .main_div{
+                    width:70%;
+                    margin-left:15%;
+                }
+
+            }
+            @media only screen and (max-width:650px){
+
+                .main_div{
+                    width:99%;
+                    margin-left:0%;
+                }
+
+            }
+             @media only screen and (max-width:385px){
+
+                .name{
+                    width:90%;
+                }
+                #id_first_name{
+                    float: none;
+                    margin-left:5%
+                 }
+                #id_last_name{
+                    float: none;
+                    margin-right: 5%;
+            }
+
+            }
+        </style>
+    </head>
+    <body>
+        <form class="main_div" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+             <div style="width: 90%;position:relative;">
+            {{form.group_image}}
+        <img src="{%static 'group.png'%}" width="100%" height="200" style="margin-left: 5%;" id="new_image">
+                 </div>
+            <span style="color:red">
+               Note : Must be a unique name
+            </span>
+            <div style="width: 90%">
+            {{form.group_name}}
+        </div>
+            Group topic :
+            <div style="width: 90%">
+            {{form.topic}}
+        </div>
+            <button type="submit">Create</button>
+                </form>
+    <script>
+    const image_input = document.getElementById("id_group_image");
+ const image = document.getElementById("new_image");
+ image_input.addEventListener("change", function(){
+      const file = this.files[0];
+
+      if (file){
+      const reader = new FileReader();
+      reader.addEventListener("load", function(){
+      image.src = this.result
+      });
+      reader.readAsDataURL(file);
+      }
+      });
+</script>
+    </body>
+</html>

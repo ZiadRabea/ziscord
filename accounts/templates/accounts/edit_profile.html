@@ -1,0 +1,180 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{%static 'Ziscord.png'%}" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="UTF-8">
+        <title>
+            Profile
+        </title>
+        
+        <style>
+
+            body{
+                background:#555
+            }
+            form{
+            border-bottom:2px groove
+            }
+            input[type=file]{
+                position:absolute;
+                left:0;
+                height:80%;
+                z-index:1;
+                opacity:0;
+                cursor:pointer;
+            }
+            aside{
+                background:#333;
+                height: 90vh;
+                width:20%;
+                float: left;
+                border:5px groove 
+            }
+            input{
+                width:96%;
+                border:3px groove;
+                margin-bottom: 5px;
+            }
+            select{
+                width:99%;
+                border:3px groove;
+                margin-bottom: 5px;
+                }
+            @media only screen and (max-width:650px){
+                aside{
+                    width:97%
+                }
+            }
+            button{
+                background: #8b7ad0;
+                font-size:30px;
+                color:white;
+                padding: 3px;
+                width:100%;
+                cursor:pointer;
+                transition:all 1.5s ease-in-out;
+                box-shadow:3px 3px 12px 1px inset #000;
+                margin-bottom:5px;
+            }
+            button:hover{
+                background-color: aliceblue;
+                color:#000
+            }
+            label{
+            display:none;
+            }
+            a{
+            display:none;
+            }
+            input[type=checkbox]{
+            display:none;
+            }
+            .important_href{
+            display:block
+            }
+            @media only screen and (max-width: 1350px){
+                aside{
+                    width:40%
+                }
+            }
+            @media only screen and (max-width: 1100px){
+                aside{
+                    width:50%
+                }
+            }
+            @media only screen and (max-width: 850px){
+                aside{
+                    width:60%
+                }
+            }
+            @media only screen and (max-width: 700px){
+                aside{
+                    width:70%
+                }
+            }
+             @media only screen and (max-width: 600px){
+                aside{
+                    width:100%
+                }
+            }
+        </style>
+        
+    </head>
+    <body>
+        <aside>
+            {%if profileid != profile%}
+             <div style="text-align:center">
+                    <div style="position:relative">
+                        {%if profileid.image != ""%}
+                        <img width="100" height="100" style="border-radius:100%;margin-top:20px;cursor: pointer" src="{{profileid.image.url}}" onerror="this.src = '{%static 'profileimg.png'%}'">
+                        {%else%}
+                        <img width="100" height="100" style="border-radius:100%;margin-top:20px;cursor: pointer" src="{%static 'profileimg.png'%}">
+                        {%endif%}
+                    </div>
+               <span style="color:white"> First name :</span>  <h3>{{profileid.user.first_name}}</h3>
+              <span style="color:white"> Last name :</span>   <h3> {{profileid.user.last_name}}</h3>
+               <span style="color:white"> Searching name :</span>  <h3>{{profileid.Searching_Name}}</h3>
+                    <span style="color:white"> interesting in :</span>
+                    {{profileid.interest}}
+                 {%if profile not in profileid.friends.all%}
+                 {%if profile in profileid.pending.all%}
+                <a class="important_href" href="/Ziscord/profile/{{profileid.slug}}/add_friend"> <button style="font-size:20px;width:100%;background:orangered">Cancel friend request</button></a>
+                {%else%}
+                <a class="important_href" href="/Ziscord/profile/{{profileid.slug}}/add_friend"> <button style="font-size:20px;width:100%;">add friend</button></a>
+                {%endif%}
+                 {%endif%}
+                </div>
+            {%else%}
+            <form method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div>
+                    <div style="position:relative;text-align:center">
+                        {{profileform.image}}
+                        {%if profile.image != ""%}
+                        <img width="100" height="100" style="border-radius:100%;margin-top:20px;cursor: pointer" src="{{profile.image.url}}" id="myimg" onerror="this.src = '{%static 'profileimg.png'%}'">
+                        {%else%}
+                        <img width="100" height="100" style="border-radius:100%;margin-top:20px;cursor: pointer" src="{%static 'profileimg.png'%}" id="myimg">
+                        {%endif%}
+                    </div>
+                    {{userform.first_name}}
+                    {{userform.last_name}}
+                    {{userfrom.username}}
+                    {{userform.email}}
+                    {{profileform.Searching_Name}}
+                    <span style="color:white"> interesting in :</span>
+                    {{profileform.interest}}
+                    <button type="submit">Save changes</button>
+                </div>
+          </form>
+            <a href="/accounts/logout" class="important_href"><button style="background:orangered">LOG OUT</button></a>
+            <a href="/accounts/profile/delete" class="important_href"><button style="background:red">Delete account 😥</button></a>
+            {%endif%}
+        </aside>
+        <script>
+
+
+            document.getElementById("id_image").onmouseover = function(){
+                document.getElementById("myimg").style.opacity = 0.3
+            }
+            document.getElementById("id_image").onmouseout = function(){
+                document.getElementById("myimg").style.opacity = 1
+            }
+            const image_input = document.getElementById("id_image");
+            const image = document.getElementById("myimg");
+            image_input.addEventListener("change", function(){
+            const file = this.files[0];
+
+            if (file){
+                const reader = new FileReader();
+                reader.addEventListener("load", function(){
+                image.src = this.result
+                });
+                reader.readAsDataURL(file);
+                }
+            });
+            document.getElementById("id_Searching_Name").placeholder = "Searching name"
+        </script>
+    </body>
+</html>

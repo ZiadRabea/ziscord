@@ -1,0 +1,1 @@
+web: gunicorn ziscord.wsgi --log-file -

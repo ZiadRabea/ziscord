@@ -1,0 +1,84 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="{%static 'Ziscord.png'%}" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="UTF-8">
+        <style>
+        *{
+        box-sizing:border-box;
+        }
+            .main_div{
+                width:35%;
+                margin: 0 auto; 
+                margin-top: 25vh;
+                background:#333
+            }
+            h3, p{
+                text-align: center;
+                color: red;
+                margin: 0;
+            }
+            img{
+                margin-left: calc(50% - 40px)
+            }
+            button{
+                background: #8b7ad0;
+                font-size:30px;
+                color:white;
+                padding: 3px;
+                width:100%;
+                cursor:pointer;
+                transition:all 1.5s ease-in-out;
+                box-shadow:3px 3px 12px 1px inset #000;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            button:hover{
+                background-color: aliceblue;
+                color:black;
+            }
+            @media only screen and (max-width: 1350px){
+                .main_div{
+                    width:40%
+                }
+            }
+            @media only screen and (max-width: 1100px){
+                .main_div{
+                    width:50%
+                }
+            }
+            @media only screen and (max-width: 850px){
+                .main_div{
+                    width:60%
+                }
+            }
+            @media only screen and (max-width: 700px){
+                .main_div{
+                    width:70%
+                }
+            }
+             @media only screen and (max-width: 600px){
+                .main_div{
+                    width:100%
+                }
+            }
+        </style>
+        <title> Ziscord | Create group</title>
+    </head>
+    
+    <body>
+        <div class = "main_div">
+            <header style="background:#ccc">
+                <h3>Are you sure you want to delete your account</h3>
+            </header>
+            <div style="margin-top:3px;">
+                <p>NOTE : if you deleted your account you cannot recover it again</p>
+                <img src="{%static 'Warning.png'%}" width="75" height="75">
+            </div>
+            <a href="/accounts/profile/delete_account"><button style="background:orangered">Yes</button></a>
+            <a href="/Ziscord/Home"><button style="background:lightblue">No</button></a>
+        </div>
+    </body>
+</html>

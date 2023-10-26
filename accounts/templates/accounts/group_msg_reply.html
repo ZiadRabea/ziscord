@@ -1,0 +1,863 @@
+{%load static%}
+{%if message.group == receiver%}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="{%static 'Ziscord.png'%}" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="UTF-8">
+    <title>Ziscord</title>
+    <style>
+        *{
+            box-sizing:border-box;
+        }
+        aside{
+        user-select: none;
+        }
+          ::-webkit-scrollbar{
+    width:5px;
+    }
+    a{
+    text-decoration:none;
+    color:black
+    }
+    ::-webkit-scrollbar-thumb{
+        border-radius:3px;
+    }
+    ::-webkit-scrollbar-thumb:hover{
+        background: #000;
+    }
+    #emoji_div{
+        width:400px;
+        height:300px;
+        overflow:scroll;
+        margin-left:40%;
+        margin-top:25vh;
+        position:fixed;
+        z-index:3;
+        background:#777;
+        display:none;
+        }
+        .search_div{
+            width:220px;
+            border-radius:20px;
+            border:8px groove;
+            float: left;
+            background:white;
+            margin-top: 7px;
+            margin-left:5px;
+        }
+        #R_M{
+        width:400px;
+        height:300px;
+        overflow:scroll;
+        margin-left:40%;
+        margin-top:25vh;
+        position:fixed;
+        z-index:3;
+        background:white;
+        display:none;
+
+        }
+        #msgs{
+        background:#666;
+        height:70vh;
+        overflow-y: scroll
+        }
+        .msg{
+        width:25px;
+        height:25px;
+        display:inline-block;
+        position:relative;
+        }
+        #id_image, #id_file{
+        position: absolute;
+        width:100%;
+        left:0;
+        top:0;
+        height:101%;
+        opacity:0;
+        }
+        .s_button{
+            display:none;
+            box-shadow:3px 3px 12px 1px inset #000;
+        }
+        #id_message{
+            background:none;
+            resize:none;
+            width:60%;
+            min-height:27px;
+            height:27px;
+            margin-left:15px;
+            margin-top:3px;
+            font-size:20px;
+            border:none;
+            max-height:100px;
+        }
+        #id_message:focus{
+        outline:none
+        }
+        #s_div{
+            margin-top: 20px;
+            width: 160px;
+            border-right: 3px double #999;
+            padding-right: 10px;
+            display: block;
+            width:30%;
+            max-height: 85vh;
+            height: 85vh;
+        }
+        #G_button{
+        display:none;
+        box-shadow:3px 3px 12px 1px inset;
+        }
+        .N_h1{
+            display: none;
+        }
+        #id_Searching_Name{
+            border:none;
+        }
+        #id_Searching_Name:focus{
+            outline: none;
+        }
+        #h_id{
+            float: right;
+            background:#f00;
+            color: #fff;
+            outline: 3px solid #f00;
+            display: none
+        }
+        .n1{
+            background:#333;
+            height:50px;
+            border-top-left-radius:15px;
+            border-top-right-radius:15px;
+        }
+        .buttonA{
+                background: #8b7ad0;
+                font-size:30px;
+                color:white;
+                padding: 3px;
+                width:100%;
+                cursor:pointer;
+                transition:all 1.5s ease-in-out;
+                box-shadow:3px 3px 12px 1px inset #000;
+            }
+            .buttonA:hover{
+                background-color: aliceblue;
+                color:black;
+            }
+        .n2{
+            background:#444;
+            border-bottom-left-radius:15px;
+            border-bottom-right-radius:15px;
+            padding-bottom:10px;
+        }
+        .p_div{
+            background:#fff;
+            margin-top: 5px;
+        }
+        .friend_img{
+            border-radius:500px;
+            border: 3px solid;
+        }
+        .F_aside{
+            float:left;
+            width: 30%;
+            border-right:1px solid #000;
+            background:#555;
+            margin-left:20px;
+            max-height: 300px;
+            overflow-y: scroll;
+            display: none;
+        }
+        .G_aside{
+            float:right;
+            width: 30%;
+            border-left:1px solid #000;
+            background:#555;
+            margin-right:10px;
+            height: 85vh;
+            overflow-y: scroll;
+            margin-top:20px;
+        }
+        .msg_div{
+            width:37%;
+            margin-left:32%;
+        }
+        .L_button{
+            background: #99f;
+            width:100%;
+            font-size: 25px;
+        }
+         @media screen and (max-width: 1450px){
+             #emoji_div{
+             margin-left:35%
+             }
+              #R_M{
+            margin-left:35%;
+            }
+         }
+         @media screen and (max-width: 1250px){
+            #s_div{
+                display: none;
+            }
+            .msg_div{
+                margin-left:0;
+                width:65%;
+            }
+            .G_aside{
+                width:33%;
+            }
+            .F_aside{
+                width:97%;
+                float:none
+            }
+            .search_div{
+                 display: none;
+            }
+            .s_button{
+            display:block
+            }
+             #emoji_div{
+             margin-left:20%
+             }
+             #R_M{
+        margin-left:20%;
+        }
+        }
+        @media screen and (max-width: 920px){
+           #R_M{
+        margin-left:15%;
+        }
+         #emoji_div{
+             margin-left:15%
+             }
+        @media screen and (max-width: 820px){
+           #R_M{
+        margin-left:10%;
+        }
+        #emoji_div{
+             margin-left:10%
+             }
+        }
+        @media screen and (max-width: 750px){
+           #R_M{
+        margin-left:5%;
+        }
+        #emoji_div{
+             margin-left:5%
+             }
+        @media screen and (max-width: 670px){
+           #R_M{
+        margin-left:0;
+        width:270px;
+        margin-left:20%;
+        }
+        #emoji_div{
+             margin-left:0%
+             }
+        }
+        @media screen and (max-width: 600px){
+            .F_aside{
+                width:100%;
+                float: none;
+                margin: 0;
+            }
+            .G_aside{
+                width:100%;
+                float: none;
+                display: none;
+            }
+             #emoji_div{
+                width:270px;
+                height:300px;
+                overflow:scroll;
+                margin-left:0%;
+                margin-top:30vh;
+            }
+            .msg_div{
+                width:100%;
+                margin:0;
+            }
+            #G_button{
+            display:block
+            }
+            #h_id{
+                display: inline-block;
+            }
+        }
+        @media only screen and (max-width:365px){
+            #id_message{
+            font-size:13px;
+            margin-top:10px;
+            width:45%;
+            }
+             #R_M{
+        margin-left:0;
+        width:270px;
+        margin-left:30px;
+        }
+        }
+           @media only screen and (max-width:400px){
+            #id_message{
+            font-size:12px;
+            margin-top:10px;
+            width:45%;
+            }
+             #R_M{
+        margin-left:0;
+        width:270px;
+        margin-left:15px;
+        }
+        }
+        @media only screen and (max-height:750px){
+            #msgs{
+            height:65vh;
+            }
+            .G_aside{
+            height:80vh;
+            }
+            #s_div{
+            height:80vh;
+            }
+        }
+        @media only screen and (max-height:660px){
+            #msgs{
+            height:60vh;
+            }
+        }
+        @media only screen and (max-height:480px){
+            #msgs{
+            height:47vh;
+            }
+        }
+    </style>
+
+    </head>
+
+    <body>
+        <div id="flash_message" style="position:fixed; width:90%;background:lightgreen;z-index:1;border-radius:500px;margin-left:5%;display:none;">
+            <h2 style="text-align:center; margin:3px;">
+            <span style="color:darkgreen;text-align:center;padding:3px;">Message copied successfully</span>
+                </h2>
+        </div>
+        <div id="R_M" style="background:#555">
+        <a href="#" id="D_U"><button class="buttonA" style="background:orangered;font-size:25px;width:100%;text-align:center;margin-bottom:10px;">Delete</button></a>
+        <a href="#" id="R_U"><button class="buttonA" style="font-size:25px;width:100%;text-align:center;margin-bottom:10px;">Reply</button></a>
+        <button class="buttonA" style="background:red;font-size:25px;width:100%;text-align:center;margin-bottom:10px;" onclick="document.getElementById('R_M').style.display = 'none'">Cancel</button>
+         </div>
+     <div id="emoji_div">
+     <img style="box-shadow:none;margin:1px;cursor:pointer" src="{%static 'emojis/1.png'%}" width="30" height="30" onclick="copyToTextarea('😊')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/2.png'%}" width="30" height="30" onclick="copyToTextarea('😃')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/3.png'%}" width="30" height="30" onclick="copyToTextarea('😁')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/4.png'%}" width="30" height="30" onclick="copyToTextarea('🤗')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/4(2).png'%}" width="30" height="30" onclick="copyToTextarea('❤')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/5.png'%}" width="30" height="30" onclick="copyToTextarea('😉')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/6.png'%}" width="30" height="30" onclick="copyToTextarea('🤓')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/7.png'%}" width="30" height="30" onclick="copyToTextarea('😎')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/8.png'%}" width="30" height="30" onclick="copyToTextarea('😭')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/9.png'%}" width="30" height="30" onclick="copyToTextarea('🥺')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/10.png'%}" width="30" height="30" onclick="copyToTextarea('😔')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/11.png'%}" width="30" height="30" onclick="copyToTextarea('🥰')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/13.png'%}" width="30" height="30" onclick="copyToTextarea('😠')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/14.png'%}" width="30" height="30" onclick="copyToTextarea('🤯')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/15.png'%}" width="30" height="30" onclick="copyToTextarea('😡')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/15(2).png'%}" width="30" height="30" onclick="copyToTextarea('☹')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/15(3).png'%}" width="30" height="30" onclick="copyToTextarea('😥')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/angry.png'%}" width="30" height="30" onclick="copyToTextarea('🤬')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/17.png'%}" width="30" height="30" onclick="copyToTextarea('🤑')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/18.png'%}" width="30" height="30" onclick="copyToTextarea('🤒')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/19.png'%}" width="30" height="30" onclick="copyToTextarea('🤕')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/20.png'%}" width="30" height="30" onclick="copyToTextarea('😷')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/21.png'%}" width="30" height="30" onclick="copyToTextarea('😙')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/22.png'%}" width="30" height="30" onclick="copyToTextarea('😚')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/23.png'%}" width="30" height="30" onclick="copyToTextarea('😘')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/24.png'%}" width="30" height="30" onclick="copyToTextarea('😍')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/25.png'%}" width="30" height="30" onclick="copyToTextarea('🙃')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/25(1).png'%}" width="30" height="30" onclick="copyToTextarea('🤔')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/25(2).png'%}" width="30" height="30" onclick="copyToTextarea('😛')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/26.png'%}" width="30" height="30" onclick="copyToTextarea('🤩')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/27.png'%}" width="30" height="30" onclick="copyToTextarea('🥵')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/28.png'%}" width="30" height="30" onclick="copyToTextarea('🥶')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/29.png'%}" width="30" height="30" onclick="copyToTextarea('😂')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/30.png'%}" width="30" height="30" onclick="copyToTextarea('🤫')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/31.png'%}" width="30" height="30" onclick="copyToTextarea('🤭')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/32.png'%}" width="30" height="30" onclick="copyToTextarea('😳')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/33.png'%}" width="30" height="30" onclick="copyToTextarea('🥳')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/34.png'%}" width="30" height="30" onclick="copyToTextarea('😐')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/35.png'%}" width="30" height="30" onclick="copyToTextarea('😕')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/36.png'%}" width="30" height="30" onclick="copyToTextarea('😒')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/37.png'%}" width="30" height="30" onclick="copyToTextarea('🥱')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/38.png'%}" width="30" height="30" onclick="copyToTextarea('😴')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/39.png'%}" width="30" height="30" onclick="copyToTextarea('😜')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/strange.png'%}" width="30" height="30" onclick="copyToTextarea('🤨')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/proud.png'%}" width="30" height="30" onclick="copyToTextarea('😌')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/moon.png'%}" width="30" height="30" onclick="copyToTextarea('🌚')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/hilal.png'%}" width="30" height="30" onclick="copyToTextarea('🌛')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/sun.png'%}" width="30" height="30" onclick="copyToTextarea('🌞')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/star(1).png'%}" width="30" height="30" onclick="copyToTextarea('⭐')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/star(2).png'%}" width="30" height="30" onclick="copyToTextarea('🌟')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/41.png'%}" width="30" height="30" onclick="copyToTextarea('🖤')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/42.png'%}" width="30" height="30" onclick="copyToTextarea('💖')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/43.png'%}" width="30" height="30" onclick="copyToTextarea('💝')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/44.png'%}" width="30" height="30" onclick="copyToTextarea('💙')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/45.png'%}" width="30" height="30" onclick="copyToTextarea('💔')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/45(2).png'%}" width="30" height="30" onclick="copyToTextarea('💞')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/46.png'%}" width="30" height="30" onclick="copyToTextarea('😹')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/47.png'%}" width="30" height="30" onclick="copyToTextarea('😻')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/48.png'%}" width="30" height="30" onclick="copyToTextarea('😼')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/49.png'%}" width="30" height="30" onclick="copyToTextarea('🙀')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/50.png'%}" width="30" height="30" onclick="copyToTextarea('🙈')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/50(2).png'%}" width="30" height="30" onclick="copyToTextarea('🙉')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/51.png'%}" width="30" height="30" onclick="copyToTextarea('🤲')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/52.png'%}" width="30" height="30" onclick="copyToTextarea('👋')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/53.png'%}" width="30" height="30" onclick="copyToTextarea('🤜')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/54.png'%}" width="30" height="30" onclick="copyToTextarea('🤛')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/55.png'%}" width="30" height="30" onclick="copyToTextarea('👊')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/56.png'%}" width="30" height="30" onclick="copyToTextarea('👍')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/57.png'%}" width="30" height="30" onclick="copyToTextarea('🤝')">
+         <span style="box-shadow:none;margin:1px;cursor:pointer; font-size:25px;margin-bottom:3px" onclick="copyToTextarea('👏')">👏</span>
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/58.png'%}" width="30" height="30" onclick="copyToTextarea('🤦‍♂️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/59.png'%}" width="30" height="30" onclick="copyToTextarea('🤦‍♀️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/60.png'%}" width="30" height="30" onclick="copyToTextarea('💁‍♂️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/61.png'%}" width="30" height="30" onclick="copyToTextarea('💁‍♀️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/62.png'%}" width="30" height="30" onclick="copyToTextarea('🙋‍♂️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/63.png'%}" width="30" height="30" onclick="copyToTextarea('🙋‍♀️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/64.png'%}" width="30" height="30" onclick="copyToTextarea('🙋‍♂️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/65.png'%}" width="30" height="30" onclick="copyToTextarea('🤷‍♂️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer;" src="{%static 'emojis/66.png'%}" width="30" height="30" onclick="copyToTextarea('🤷‍♀️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag1.png'%}" width="30" height="30" onclick="copyToTextarea('🇹🇷')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag2.png'%}" width="30" height="30" onclick="copyToTextarea('🇪🇬')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag3.png'%}" width="30" height="30" onclick="copyToTextarea('🇮🇶')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag4.png'%}" width="30" height="30" onclick="copyToTextarea('🇯🇵️')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag5.png'%}" width="30" height="30" onclick="copyToTextarea('🇹🇳')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag6.png'%}" width="30" height="30" onclick="copyToTextarea('🇵🇸')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag7.png'%}" width="30" height="30" onclick="copyToTextarea('🇸🇾')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag8.png'%}" width="30" height="30" onclick="copyToTextarea('🇶🇦')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag9.png'%}" width="30" height="30" onclick="copyToTextarea('🇮🇩')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag10.png'%}" width="30" height="30" onclick="copyToTextarea('🇱🇧')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag11.png'%}" width="30" height="30" onclick="copyToTextarea('🇺🇸')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag12.png'%}" width="30" height="30" onclick="copyToTextarea('🇸🇦')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag13.png'%}" width="30" height="30" onclick="copyToTextarea('🇩🇪')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag14.png'%}" width="30" height="30" onclick="copyToTextarea('🇬🇧')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag15.png'%}" width="30" height="30" onclick="copyToTextarea('🇧🇷')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag16.png'%}" width="30" height="30" onclick="copyToTextarea('🇲🇦')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag17.png'%}" width="30" height="30" onclick="copyToTextarea('🇯🇴')">
+     <img style="box-shadow:none;margin:1px;cursor:pointer; border-radius:0;" src="{%static 'emojis/flag18.png'%}" width="30" height="30" onclick="copyToTextarea('🏁')">
+        </div>
+         <!-- Nav bar 1  -->
+
+    <nav class="n1">
+        <form class = "search_div" method="get" style="margin-top: 5px;">
+            {%csrf_token%}
+            {{filter.form.Searching_Name}}
+          <button type="submit" style="background: none; border:none" id="b_search" disabled><img src="{%static 'search%20icon.png'%}" width="8" height="8"></button>
+        </form>
+        <h1 style="display:inline-block; margin-top:7px; margin-left:10px;color:white" class="N_h1">Ziscord</h1>
+       <img src="{%static 'Ziscord.png'%}" width="45" height="45" style="float: right;border-radius:500px;">
+         <a href="/accounts/profile/Notifications"><div style=" float: right" id="notification_div" >
+             <!-- notifications -->
+                 <li style="margin:0;background:none;position: relative;display:inline-block;">
+                <img src="{%static 'notifications.png'%}" width="40" height="40" style="margin-top:5px;"><br>
+                     {%if notifications.count != 0%}
+                    <span style="background: red;color:aliceblue;border-radius:500px;font-size:10px;position:absolute; top:0; display:inline-block; height:auto;min-width: 10px;min-height: 10px;text-align: center;width: auto;height: auto;padding:1px;right:0;">{{notifications.count}}</span>
+                {%endif%}
+                 </li>
+             <!-- notifications -->
+         </div></a>
+        </nav>
+
+        <!-- nav 2 -->
+
+        <nav class="n2">
+            <div style="display:inline-block">
+
+                <li style="margin:0;background:none;position: relative;display:inline-block;">
+            <img src="{%static 'nav.png'%}" width="30" height="30" style="margin-left: 10px;" id="navIcon">
+
+                    <span id="msgs_div">
+                        <!-- msg notifications-->
+                {%if messages_notifications != 0%}
+                    <span style="background: red;color:aliceblue;border-radius:500px;font-size:10px;position:absolute; top:0; display:inline-block; height:auto;min-width: 10px;min-height: 10px;text-align: center;width: auto;height: auto;padding:1px;right:0;">{{messages_notifications}}</span>
+                {%endif%}
+                        <!-- msg notifications-->
+                        </span>
+                </li>
+            </div>
+            <a href="/accounts/{{profile.slug}}/" style="color:black"><div class = "p_div" style="float:right;border-radius: 500px;margin-right:20px;background:black;padding:0" id="profile_div">
+                  {%if profile.image != ""%}
+                <img src="{{profile.image.url}}" width="30" height="30" style="border-radius:500px;margin-top:3px" onerror="this.src='{%static 'profileimg.png'%}'">
+             {%else%}
+                <img src="{%static 'profileimg.png'%}" width="30" height="30">
+             {%endif%}
+                <span id="profile_txt" style="float:right;margin-top:7px;margin-left:10px;margin-right:10px;color:white;padding">{{profile.user.first_name}} {{profile.user.last_name}}</span></div></a>
+        </nav>
+
+
+        <!-- searching results -->
+        <div id="s_div" class="F_aside">
+            {%for i in profiles%}
+            {%if i != profile and i not in profile.friends.all%}
+         <a href="/Ziscord/profile/{{i.slug}}/chat"> <div style="margin-top: 20px; border-right: 3px double #999;padding-right: 10px;">
+             {%if i.image != ""%}
+                <img src="{{i.image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'profileimg.png'%}'" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+             {%else%}
+                <img src="{%static 'profileimg.png'%}" width="50" height="50" class="friend_img"  style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+             {%endif%}
+             {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
+        <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}} {{i.user.last_name}}</h3>
+         </div></a>
+             {%if profile in i.pending.all%}
+             <a href="/Ziscord/profile/{{i.slug}}/add_friend"> <button style="font-size:20px;width:100%;background:orangered" class="buttonA">Cancel friend request</button></a>
+             {%else%}
+            <a href="/Ziscord/profile/{{i.slug}}/add_friend"> <button style="font-size:20px;width:100%;" class="buttonA">add friend</button></a>
+            {%endif%}
+            {%endif%}
+            {%endfor%}
+            </div>
+
+
+       <aside class = F_aside id="F_aside">
+            <!-- friends Aside -->
+            <h1 style = "text-align: center; border-bottom: 3px dashed #999">
+            friends
+            </h1>
+            {%for i in profile.friends.all%}
+            <div style="border-bottom: 3px #eee groove;">
+            <a href="/Ziscord/profile/{{i.slug}}/chat"><div style="margin-bottom:10px;padding-bottom:5px;">
+                {%if i.image != ""%}
+                <img src="{{i.image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'profileimg.png'%}'" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                {%else%}
+                <img src="{%static 'profileimg.png'%}" width="50" height="50" class="friend_img" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                {%endif%}
+                {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
+                <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
+                {%for m in all_messages.all%}
+                    {%if m.Sender == i and m.sent == False%}
+                        <span style="color:red;margin-left:20%;">* you have new message(s)</span>
+                    {%endif%}
+                {%endfor%}
+                <br>
+            </div></a>
+            <a href="/Ziscord/profile/{{i.slug}}/unfriend"><button class="buttonA" style="background:orangered;font-size:17px;">Unfriend</button></a>
+                </div>
+            {%endfor%}
+             <h1 style = "text-align: center; border-bottom: 3px dashed #999">
+            Chats
+            </h1>
+            {%for i in profile.chatters.all%}
+            {%if i not in profile.friends.all%}
+            <a href="/Ziscord/profile/{{i.slug}}/chat"><div style="margin-bottom:10px;border-bottom: 3px #eee groove;padding-bottom:5px;">
+                {%if i.image != ""%}
+                <img src="{{i.image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'profileimg.png'%}'" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                {%else%}
+                <img src="{%static 'profileimg.png'%}" width="50" height="50" class="friend_img" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                {%endif%}
+                {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
+                <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
+                {%for m in all_messages.all%}
+                    {%if m.Sender == i and m.sent == False%}
+                        <span style="color:red;margin-left:20%;">* you have new messages</span>
+                    {%endif%}
+                {%endfor%}
+                <br>
+                <a href="/Ziscord/profile/{{i.slug}}/delete_chat"><button class="buttonA" style="background:orangered;font-size:17px;">remove chat</button></a>
+            </div></a>
+            {%endif%}
+            {%endfor%}
+            <button style="font-size:25px;background:#999fff; width:100%; text-align: center " id="G_button">Groups</button>
+            <a href="/accounts/Search"><button style="font-size:25px;background:#999fff; width:100%; text-align: center;margin-top:10px" class="s_button">Search <img src="{%static 'search icon.png'%}" width="17" height="17"></button></a>
+        <!-- friends Aside -->
+        </aside>
+
+        <!-- groups aside -->
+
+
+                     <aside class="G_aside" id="G_aside">
+            <h1 style = "text-align: center; border-bottom: 3px dashed #999;border-top: 3px dashed #999">
+            groups in your manage <span id = h_id>X</span>
+            </h1>
+               {%for g in groups%}
+               {%if g.admin == profile%}
+           <a href="/accounts/group/{{g.slug}}"> <div style="margin-bottom:10px;border-bottom: 3px #eee groove;padding-bottom:5px;">
+               <span style="color:red;margin-left:20%;display:none" id="span{{g.id}}">* you have new message(s)</span>
+                {%if g.group_image != "" %}
+                <img src="{{g.group_image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'group.png'%}'">
+                {%else%}
+                <img src="{%static 'group.png'%}" width="50" height="50" class="friend_img">
+                {%endif%}
+                <a href = "/accounts/group/{{g.slug}}/info"><button style="float:right;margin-top:7px; width:auto;background:#ddd;box-shadow:3px 3px 12px 1px inset;border-radius:10px;border:2px groove;" class="L_button">owned</button></a>
+                <span style="font-weight: bold">{{g.group_name}}</span><br>
+                {%for m in group_messages.all%}
+                    {%if m.group == g and profile not in m.readers.all%}
+                        <script>
+                            document.getElementById("span{{g.id}}").style.display = "block"
+                        </script>
+                    {%endif%}
+                {%endfor%}
+           </div>
+           </a>
+               {%endif%}
+                {%endfor%}
+             <h1 style = "text-align: center; border-bottom: 3px dashed #999;border-top: 3px dashed #999">
+            groups you membered in
+            </h1>
+               {%for g in groups%}
+               {%if profile in g.members.all%}
+            <a href="/accounts/group/{{g.slug}}"><div style="margin-bottom:10px;border-bottom: 3px #eee groove;padding-bottom:5px;">
+                <span style="color:red;margin-left:20%;display:none" id="span{{g.id}}">* you have new message(s)</span>
+                {%if g.group_image != "" %}
+                <img src="{{g.group_image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'group.png'%}'">
+                {%else%}
+                <img src="{%static 'group.png'%}" width="50" height="50" class="friend_img">
+                {%endif%}
+                <a href="/accounts/group/{{g.slug}}/join"><button style="float:right;margin-top:7px; width:auto;background:orangered;box-shadow:3px 3px 12px 1px inset;border-radius:10px" class="L_button">Leave</button></a>
+                <span style="font-weight: bold">{{g.group_name}}</span><br>
+                 {%for m in group_messages.all%}
+                    {%if m.group == g and profile not in m.readers.all%}
+                        <script>
+                            document.getElementById("span{{g.id}}").style.display = "block"
+                        </script>
+                    {%endif%}
+                {%endfor%}
+            </div></a>
+               {%endif%}
+               {%endfor%}
+            <h1 style = "text-align: center; border-bottom: 3px dashed #999;border-top: 3px dashed #999">
+            suggested groups
+            </h1>
+               {%for g in groups%}
+               {%if g.topic == profile.interest%}
+               {%if profile not in g.members.all and profile != g.admin%}
+            <a href="/accounts/group/{{g.slug}}"><div style="margin-bottom:10px;border-bottom: 3px #eee groove;padding-bottom:5px;">
+                <span style="color:red;margin-left:20%;display:none" id="span{{g.id}}">* you have new message(s)</span>
+                {%if g.group_image != "" %}
+                <img src="{{g.group_image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'group.png'%}'">
+                {%else%}
+                <img src="{%static 'group.png'%}" width="50" height="50" class="friend_img">
+                {%endif%}
+                 <a href="/accounts/group/{{g.slug}}/join"><button style="float:right;margin-top:7px; width:auto;background:lightblue;box-shadow:3px 3px 12px 1px inset;border-radius:10px" class="L_button">Join</button></a>
+                <span style="font-weight: bold">{{g.group_name}}</span><br>
+                {%for m in group_messages.all%}
+                    {%if m.group == g and profile not in m.readers.all%}
+                        <script>
+                            document.getElementById("span{{g.id}}").style.display = "block"
+                        </script>
+                    {%endif%}
+                {%endfor%}
+            </div></a>
+               {%endif%}
+               {%endif%}
+               {%endfor%}
+               <a href="/accounts/groups/create"> <button class="L_button" style="box-shadow:3px 3px 12px 1px inset;">Create you own 😉</button></a>
+            </aside>
+         <div class="msg_div" id = "msg_div">
+         <header style="margin-bottom: 3px; border-bottom: 3px groove;background:#eee;height:65px">
+               <a href="/accounts/group/{{receiver.slug}}/info"><h1>
+                    {%if receiver.group_image != ""%}
+                <img src="{{receiver.group_image.url}}" style="border-radius: 500px;" width="50" height="50" onerror="this.src='{%static 'group.png'%}'">
+                    {%else%}
+                <img src="{%static 'group.png'%}" style="border-radius: 500px;" width="50" height="50">
+                    {%endif%}
+                    <span style="float:right;margin-top:10px;">{{receiver.group_name}}</span>
+            </h1></a>
+            </header>
+            <div id="msgs">
+                <!-- messages div -->
+                {%for msg in messages%}
+                {%if msg.group == receiver and msg.sender != profile%}
+                {%if msg.reply != none%}
+              <div style="width:100%"><a href="#{{msg.reply.id}}"><div style="opacity:0.7;background:#fff; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;max-width:90%;margin-bottom:0;">
+                  {%if msg.reply.Sender == profile%}<span style="color:lightgreen">replied to himself</span> {%elif msg.reply.Sender == receiver%} <span style="color:orangered">replied to you</span> {%endif%}<br/>
+                  <pre style="float: left;margin: 0;word-wrap:break-word;max-width:100%;white-space:pre-wrap">
+                  {{msg.reply.message}}{%if msg.reply.file != ""%}<br><br>Uploaded file {%endif%}</pre><div style="clear: both"></div>
+                    {%if msg.reply.image != ""%}
+                    <br/>
+                    <img src="{{msg.reply.image.url}}" width="150" height="200" style="display:inline-block;float:right">
+                    <br>
+                    {%endif%}
+                 </div>
+                  </a>
+                  </div>
+                {%endif%}
+                <div style="width:100%;margin-top:5px" id="{{msg.id}}"><div ondblclick="h_s_s('{{msg.id}}')" onclick="copy_msg(msg{{msg.id}})" style="background: #fff; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;max-width:90%;margin-top:0;"><div id="msg{{msg.id}}">{%if msg.sender == receiver.admin%}<a href="/accounts/{{msg.sender.slug}}" style="color:red;float:left">admin</a>{%else%}<a href="/accounts/{{msg.sender.slug}}" style="color:green;float:left">{{msg.sender.user.first_name}}</a>{%endif%}<br><pre style="float: left;margin: 0;word-wrap:break-word;max-width:100%;white-space:pre-wrap;">{{msg.message}}{%if msg.file != ""%}<br><br><a style="color:steelblue" href="{{msg.file.url}}">Uploaded file</a> {%endif%}</pre></div><div style="clear: both"></div>
+                    {%if msg.image != ""%}
+                    <br/>
+                    <img src="{{msg.image.url}}" width="150" height="200">
+                    <br>
+                    {%endif%}
+                    <span style="font-size: 10px;float: left;margin-top: 15px;">{{msg.date|date:'P'}}</span> </div></div>
+                {%endif%}
+                {%if msg.group == receiver and msg.sender == profile%}
+                {%if msg.reply != None%}
+                <div style="width:100%; text-align: right"><div style="background: #fff; opacity:0.7; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;height:auto;margin-bottom:0; "><pre style="float: left;margin: 0;word-wrap:break-word;max-width:100%;white-space:pre-wrap;">
+                    {%if msg.reply.Sender == profile%} <span style="color:lightgreen">replied to your self</span>{%elif msg.reply.Sender == receiver%}<span style="color:red">replied to {{receiver.user.first_name}}</span>{%endif%}
+                    {{msg.reply.message}} {%if msg.file != ""%}<br><br><a style="color:lightgreen" href="{{msg.file.url}}">Uploaded file</a> {%endif%}</pre><div style="clear: both"></div>
+                    {%if msg.image != ""%}
+                    <br/><img src="{{msg.image.url}}" width="150" height="200"><br>
+                   {%endif%}
+                </div>
+                </div>
+                {%endif%}
+                <div style="width:100%; text-align: right;margin-top:5px" id="{{msg.id}}" ><div ondblclick="h_s('{{msg.id}}')" onclick="copy_msg(msg{{msg.id}})"  style="background: #99f; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;height:auto;margin-top:0;">{%if msg.sender == receiver.admin%}<a href="/accounts/{{msg.sender.slug}}" style="color:red;float:left">admin</a>{%else%}<a href="/accounts/{{msg.sender.slug}}" style="color:green;float:left">{{msg.sender.user.first_name}}</a>{%endif%}<br><pre id="msg{{msg.id}}" style="float: left;margin: 0;word-wrap:break-word;max-width:100%;white-space:pre-wrap;">{{msg.message}} {%if msg.file != ""%}<br><br><a style="color:lightgreen" href="{{msg.file.url}}">Uploaded file</a> {%endif%}</pre><div style="clear: both"></div>
+                    {%if msg.image != ""%}
+                    <br/><img src="{{msg.image.url}}" width="150" height="200"><br>
+                   {%endif%}
+                    <span style="font-size: 10px;float: left;margin-top: 15px;">{{msg.date|date:'P'}}</span></div></div>
+                {%endif%}
+                {%endfor%}
+                <!-- messages div -->
+            </div>
+           <form method="post" enctype="multipart/form-data">
+                {%csrf_token%}
+                <div style="border:1px solid #000; margin-top:5px;border-radius:10px;text-align: center;{%if message.image != ''%}height: 75px{%else%} height:auto;{%endif%}">
+                    <h2 style="padding:0px;margin-top:5px;margin-bottom:5px;display: inline-block">{{message.message}}{%if message.file != ""%}uploaded file{%endif%}</h2>
+                     {%if message.image != ""%}
+                     <div style="float: right"><img src="{{message.image.url}}" width="50" height="75"></div>
+                     {%endif%}
+                 </div>
+            <div style = "border:1px solid #000; margin-top:5px;border-radius:40px;min-height:40px; height:auto">
+                <div style="width:25px; height:25px; display:inline;margin-left:15px;cursor:pointer" id="emoji"><img src="{%static 'emoji.png'%}" width="25" height="25" style="border-radius:500px;"></div> {{Message_Form.message}} <div class="msg">{{Message_Form.image}}<img src="{%static 'image.png'%}" width="25" height="25"></div> <div class="msg">{{Message_Form.file}} <img src="{%static 'file.png'%}" width="25" height="25"></div> <button type="submit" style="display:inline-block;background:none;border:none;width:25px; height:25px;padding:0;display:none" id="button"><img style="box-shadow:none;border-radius:0;" src="{%static 'Send.jpg'%}" width="25" height="25"></button>
+                </div>
+            </form>
+        </div>
+            <script src="{%static 'jquery.js'%}"></script>
+            <script>
+
+            setInterval(function(){
+                if (document.getElementById("id_Searching_Name").value != ''){
+                    document.getElementById("b_search").disabled = false
+                    document.getElementById("b_search").style.background = "lightblue"
+                    document.getElementById("b_search").style.border = "1px groove "
+
+            }
+
+            else{
+                    document.getElementById("b_search").disabled = true
+                    document.getElementById("b_search").style.background = "none"
+                    document.getElementById("b_search").style.border = "none"
+            }},100)
+            document.getElementById("id_Searching_Name").placeholder = "search"
+             $(document).ready(function() {
+                $("#navIcon").click(function(){
+                $("#F_aside").slideToggle(500);
+                $("#s_div").hide(100);
+                });
+            });
+            document.getElementById("G_button").onclick = function(){
+                document.getElementById("G_aside").style.display = "inline-block";
+                document.getElementById("F_aside").style.display = "none";
+                document.getElementById("msg_div").style.display = "none";
+            }
+            document.getElementById("h_id"). onclick = function(){
+                 document.getElementById("G_aside").style.display = "none";
+                 document.getElementById("F_aside").style.display = "none";
+                document.getElementById("msg_div").style.display = "block";
+            }
+            document.getElementById("id_message").placeholder = "Write your message"
+          var message = document.getElementById("id_message")
+          var button = document.getElementById("button")
+          setInterval(function(){
+            document.getElementById("id_message").style.height = (document.getElementById("id_message").scrollHeight)+"px"
+            if (message.value != ""){
+            button.style.display = "inline-block";
+            }
+            else if(document.getElementById("id_file").value != ""){
+            button.style.display = "inline-block";
+            }
+            else if(document.getElementById("id_image").value != ""){
+                button.style.display = "inline-block"
+            }
+            else{
+                button.style.display = "none"
+            }
+            },100)
+            document.getElementById("emoji").onclick = function(){
+            document.getElementById("emoji_div").style.display = 'block'
+            }
+            document.getElementById("msgs").onclick = function(){
+            document.getElementById("emoji_div").style.display = 'none'
+            }
+            document.getElementById("id_message").onfocus = function(){
+            document.getElementById("emoji_div").style.display = 'none'
+            }
+            function copyToTextarea(e){
+            text = e.textContent
+            document.getElementById("id_message").value = document.getElementById("id_message").value + e
+            }
+            setInterval(function(){
+              var myRequest = new XMLHttpRequest();
+              myRequest.onreadystatechange = function(){
+              if(this.readyState == 4 && this.status == 200){
+
+                var [a,b,c] = this.responseText.split('<!-- messages div -->')
+                document.getElementById("msgs").innerHTML = b
+
+                var [span1,notifications,span2] = this.responseText.split('<!-- notifications -->')
+                document.getElementById("notification_div").innerHTML = notifications
+
+                var [span0,msg_notifications,span3] = this.responseText.split('<!-- msg notifications-->')
+                document.getElementById("msgs_div").innerHTML = msg_notifications
+
+                var [span0, friendsAside, span3] = this.responseText.split('<!-- friends Aside -->')
+                document.getElementById("F_aside").innerHTML = friendsAside
+              }};
+              myRequest.open("Get",window.location.href,true)
+              myRequest.send();
+          }, 2000);
+             document.getElementById("profile_div").onmouseover = function(){
+              document.getElementById("profile_txt").style.color = "black"
+              this.style.background = "white"
+          }
+          document.getElementById("profile_div").onmouseout = function(){
+              this.style.background = "black"
+              document.getElementById("profile_txt").style.color = "white"
+          }
+               function h_s(e){
+            document.getElementById("R_M").style.display = "block";
+            document.getElementById("D_U").href = "/accounts/group/{{receiver.slug}}/"+e+"/delete";
+            document.getElementById("R_U").href = "/Ziscord/profile/{{receiver.slug}}/chat/"+e+"/reply#message"+e;
+            }
+           function h_s_s(e){
+            document.getElementById("R_M").style.display = "block";
+            document.getElementById("D_U").style.display = "none";
+            document.getElementById("R_U").href = "/Ziscord/profile/{{receiver.slug}}/"+e+"/reply#message"+e;
+          }
+          function copy_msg(e) {
+            var range = document.createRange();
+            range.selectNode(e); //changed here
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+            document.getElementById("flash_message").style.display = "block"
+            }
+            setInterval(function(){
+                document.getElementById("flash_message").style.display = "none"
+            }, 2000);
+            document.getElementById("id_file").onchange = function(){
+            button.style.display = "inline-block"
+            message.value = " "
+            }
+            var chat = document.getElementById("msgs")
+            var getOffSet = chat.lastElementChild.offsetTop;
+
+            chat.scrollBy({
+            left: 0,
+            top: getOffSet
+          });
+        </script>
+    </body>
+</html>
+{%else%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Not Found</title>
+</head>
+<body>
+  <h1>Not Found</h1><p>The requested resource was not found on this server.</p>
+</body>
+</html>
+{%endif%}

@@ -1,0 +1,211 @@
+{%load static%}
+<!doctype html>
+<html>
+    <head>
+        <link rel="icon" href="{%static 'Ziscord.png'%}" type="image/png">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="UTF-8">
+        <title>
+            Ziscord
+        </title>
+        
+        <style>
+            body{
+                background:#555
+            }
+            aside{
+                overflow-y:scroll;
+            }
+              ::-webkit-scrollbar{
+    width:5px;
+    }
+    a{
+    text-decoration:none;
+    color:black
+    }
+    ::-webkit-scrollbar-thumb{
+        border-radius:3px;
+    }
+    ::-webkit-scrollbar-thumb:hover{
+        background: #000;
+    }
+              .friend_img{
+            border-radius:500px;
+            border: 3px solid;
+            border-color: aquamarine;
+            float:left;
+        }
+            aside{
+                background:#333;
+                height: 90vh;
+                width:20%;
+                float: left;
+                border:5px groove 
+            }
+            input{
+                width:96%;
+                border:3px groove;
+                margin-bottom: 5px;
+            }
+            select{
+                width:99%;
+                border:3px groove;
+                margin-bottom: 5px;
+            } @media only screen and (max-width: 1350px){
+                aside{
+                    width:40%
+                }
+            }
+            @media only screen and (max-width: 1100px){
+                aside{
+                    width:50%
+                }
+            }
+            @media only screen and (max-width: 850px){
+                aside{
+                    width:60%
+                }
+            }
+            @media only screen and (max-width: 700px){
+                aside{
+                    width:70%
+                }
+            }
+             @media only screen and (max-width: 600px){
+                aside{
+                    width:100%
+                }
+            }
+            button{
+                background: #8b7ad0;
+                font-size:30px;
+                color:white;
+                padding: 3px;
+                width:100%;
+                cursor:pointer;
+                transition:all 1.5s ease-in-out;
+                box-shadow: 3px 3px 12px 1px #000 inset 
+            }
+            button:hover{
+                background-color: aliceblue;
+                color:#8b7ad0
+            }
+        </style>
+        
+    </head>
+    <body>
+        <aside>
+                <div style="text-align: center">
+                    {%if group.group_image != ""%}
+                    <img width="100" height="100" style="border-radius:100%;margin-top:20px;cursor: pointer" src="{{group.group_image.url}}" id="myimg" onerror="this.src='{%static 'group.png'%}'"><br>
+                    {%else%}
+                    <img src="{%static 'group.png'%}" width="100" height="100" id="myimg">
+                    {%endif%}
+                    <br>
+                    <span style="color:white">
+                        Group name :
+                    </span>
+                    <h3>{{group.group_name}}</h3>
+                      <span style="color:white">
+                        Topic :
+                    </span>
+                    <h3>{{group.topic}}</h3>
+                    <!-- admin buttons -->
+                    {%if profile == group.admin%}
+                   <a href="delete"><button style="font-size:20px; background:orangered; margin-bottom: 5px;">Delete group</button></a>
+                    <a href="edit"><button style="font-size:20px; margin-bottom: 5px;">Edit group</button></a>
+                    {%endif%}
+                    <details style="margin-bottom: 5px;">
+                        <summary>admin and members<span style="color:lightgreen;float:right">Online {{online.count}}</span></summary>
+                        
+                            
+                            <!-- admin -->
+                            
+                            <h2 style = "border-bottom:2px dashed #999;border-top:2px dashed #999;">
+                                admin
+                            </h2>
+                            <div style="margin-top: 20px; border-right: 3px double #999;padding-right: 10px;">
+                                {%if group.admin.image != ""%}
+                                <img src="{{group.admin.image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'profileimg.png'%}'" style="{%if group.admin.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                                {%else%}
+                                <img src="{%static 'profileimg.png'%}" width="50" height="50" class="friend_img" style="{%if group.admin.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                                {%endif%}
+                                 {%if group.admin.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
+                                <h3 style="display: inline-block;float: right; margin-top: 27px;">{{group.admin.user.first_name}}</h3>
+                                <a href="/accounts/{{group.admin.slug}}"><button style="font-size:20px;width:100%;" class="buttonA">main profile</button></a>
+                                {%if profile == group.admin%}
+                                {%endif%}
+                            </div>
+                            
+                            <!-- friends -->
+                            
+                            <h2 style = "border-bottom:2px dashed #999;border-top:2px dashed #999;">
+                            Friends
+                            </h2>
+                        {%for i in group.members.all%}
+                        {%if i in profile.friends.all%}
+                            <div style="margin-top: 20px; border-right: 3px double #999;padding-right: 10px;">
+                            {%if i.image != ""%}
+                                <img src="{{i.image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'profileimg.png'%}'" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                            {%else%}
+                                <img src="{%static 'profileimg.png'%}" width="50" height="50" class="friend_img" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                            {%endif%}
+                                {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
+                            <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
+                               <a href="/Ziscord/profile/{{i.slug}}/unfriend"><button class="buttonA" style="font-size:20px;width:100%;background:orangered;margin-top:5px;">Unfriend</button></a>
+                                {%if profile == group.admin%}
+                                <a href="{{i.id}}/remove"> <button class="buttonA" style="font-size:20px;width:100%;background:orangered;margin-top:5px;">Remove memeber</button></a>
+                                {%endif%}
+                            </div>
+                        {%endif%}
+                        {%endfor%}
+                            
+                            <!-- members -->
+                            
+                            <h2 style = "border-bottom:2px dashed #999;border-top:2px dashed #999;">
+                            members
+                            </h2>
+                        {%for i in group.members.all%}
+                        {%if i not in profile.friends.all and i != profile%}
+                            <div style="margin-top: 20px; border-right: 3px double #999;padding-right: 10px;">
+                           {%if i.image != ""%}
+                                <img src="{{i.image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'profileimg.png'%}'" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                            {%else%}
+                                <img src="{%static 'profileimg.png'%}" width="50" height="50" class="friend_img" style="{%if i.online == True%}border-color: aquamarine;{%else%}border-color: black;{%endif%}">
+                            {%endif%}
+                                {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
+                             <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
+                            <a href="/accounts/{{i.slug}}"><button style="font-size:20px;width:100%;" class="buttonA">main profile</button></a>
+                            {%if profile == group.admin%}
+                               <a href="{{i.id}}/remove"> <button class="buttonA" style="font-size:20px;width:100%;background:orangered;margin-top:5px;">Remove memeber</button></a>
+                                {%endif%}
+                            </div>
+                        {%endif%}
+                        {%endfor%}
+                    </details>
+                    {%if profile != group.admin%}
+                    {%if profile in group.members.all%}
+                   <a href="join"><button style="font-size:20px; background:orangered; margin-bottom: 5px;">
+                        Leave group
+                    </button></a>
+                    {%else%}
+                    <a href="join"><button style="font-size:20px; background:lightblue; margin-bottom: 5px;">
+                        Join group
+                    </button></a>
+                    {%endif%}
+                    <a href="add"><button style="font-size:20px; margin-bottom: 5px;">
+                        + friend
+                    </button></a>
+                    {%endif%}
+                </div>
+        </aside>
+        <script>
+            document.getElementById("myimg").onmouseover = function(){
+                this.style.opacity = 0.3
+            }
+            document.getElementById("myimg").onmouseout = function(){
+                this.style.opacity = 1
+            }
+        </script>
+    </body>
+</html>

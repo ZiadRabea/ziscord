@@ -1,0 +1,109 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="admin" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="12">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+            <item index="6" class="java.lang.String" itemvalue="heading" />
+            <item index="7" class="java.lang.String" itemvalue="div" />
+            <item index="8" class="java.lang.String" itemvalue="pre" />
+            <item index="9" class="java.lang.String" itemvalue="h1" />
+            <item index="10" class="java.lang.String" itemvalue="p" />
+            <item index="11" class="java.lang.String" itemvalue="li" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="PyArgumentListInspection" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyGlobalUndefinedInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="5">
+            <item index="0" class="java.lang.String" itemvalue="boto3" />
+            <item index="1" class="java.lang.String" itemvalue="portalocker" />
+            <item index="2" class="java.lang.String" itemvalue="automium-web" />
+            <item index="3" class="java.lang.String" itemvalue="pyinstaller" />
+            <item index="4" class="java.lang.String" itemvalue="auto-py-to-exe" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8Inspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="E501" />
+          <option value="E722" />
+          <option value="E402" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N802" />
+          <option value="N806" />
+          <option value="N803" />
+          <option value="N801" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="Posts.models.Posts.objects" />
+          <option value="Accounts.models.Profile.objects" />
+          <option value="Videos.models.Video.objects" />
+          <option value="Accounts.models.Follow.objects" />
+          <option value="Accounts.models.Profile.post" />
+          <option value="Accounts.models.Profile.*" />
+          <option value="Accounts.models.Followers.*" />
+          <option value="Accounts.models.UserFollowers.*" />
+          <option value="Accounts.models.Followed.*" />
+          <option value="Posts.models.Comment.*" />
+          <option value="Posts.models.post_comments.*" />
+          <option value="Posts.models.Notify.*" />
+          <option value="Chatting.models.Message.*" />
+          <option value="Accounts.models.Chat.*" />
+          <option value="Posts.models.Reply.*" />
+          <option value="Accounts.models.group.*" />
+          <option value="Accounts.models.Blocked.*" />
+          <option value="Accounts.models.Block.*" />
+          <option value="Accounts.models.dictionary.*" />
+          <option value="todos.models.job.*" />
+          <option value="todos.models.Goal.*" />
+          <option value="store.models.Category.*" />
+          <option value="store.models.bill.*" />
+          <option value="store.models.costumer.*" />
+          <option value="store.models.num.*" />
+          <option value="blog.models.Category.*" />
+          <option value="RabZ.Posts.models.Accounts" />
+          <option value="RabZ.Posts.models.poll.*" />
+          <option value="RabZ.Posts.models.option.*" />
+          <option value="management.models.Teacher.*" />
+          <option value="management.models.student.*" />
+          <option value="management.models.T_bill.*" />
+          <option value="Accounts.models.msg_Reply.*" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
