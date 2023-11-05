@@ -32,7 +32,6 @@ docutils==0.17
 Eel==0.12.4
 fields==5.0.0
 future==0.18.2
-gevent==21.1.2
 gunicorn==20.1.0
 hyperlink==21.0.0
 idna==2.10
