@@ -7,7 +7,6 @@ autobahn==21.3.1
 Automat==20.2.0
 automium==0.2.6
 automium-web==0.1.1
-beautifulsoup4==4.9.3
 boto3==1.17.53
 botocore==1.20.53
 bottle==0.12.19
@@ -42,7 +41,6 @@ jmespath==0.10.0
 legacy==0.1.6
 MarkupSafe==1.1.1
 msgpack==1.0.2
-mysqlclient==2.0.3
 pefile==2019.4.18
 Pillow==8.1.0
 portalocker==2.3.0
