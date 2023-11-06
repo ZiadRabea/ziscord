@@ -10,11 +10,6 @@ bottle-websocket==0.2.9
 certifi==2020.12.5
 cffi==1.14.4
 chardet==4.0.0
-click==7.1.2
-colorama==0.4.4
-constantly==15.1.0
-cryptography==3.4.6
-daphne==3.0.1
 dj-database-url==0.5.0
 Django==3.1.4
 django-bootstrap4==2.3.1
@@ -28,9 +23,6 @@ fields==5.0.0
 future==0.18.2
 gunicorn==20.1.0
 hyperlink==21.0.0
-idna==2.10
-incremental==21.3.0
-itsdangerous==1.1.0
 Jinja2==2.11.3
 jmespath==0.10.0
 legacy==0.1.6
