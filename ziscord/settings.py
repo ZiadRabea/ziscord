@@ -136,14 +136,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': 'V5uR3wx19EDd7ts37jKtNMmAe2Q'
 }
 CLOUDINARY_URL = "cloudinary://z-apps:772947541711259@V5uR3wx19EDd7ts37jKtNMmAe2Q"
-
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'rabz6561@gmail.com'
-EMAIL_HOST_PASSWORD = 'xkbhbbmbwegrhfdc'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
