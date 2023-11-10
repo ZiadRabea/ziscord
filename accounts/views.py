@@ -72,10 +72,7 @@ def main(request):
     Filter = Search(request.GET, queryset=profiles)
     profiles = Filter.qs
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
-    my_messages = 0
-    for i in Msg:
-        if i.Sender in userprofile.friends.all() or i.Sender in userprofile.chatters.all():
-            my_messages += 1
+    my_messages = Msg.count
     context = {
         "profile": userprofile,
         "groups": groups,
@@ -177,10 +174,7 @@ def msg_reply(request, slug, msgid):
     message.objects.filter(receiver=userprofile, Sender=profileid).update(read=True, sent=True)
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
-    message_notifications = 0
-    for i in msgs:
-        if i.Sender in userprofile.friends.all() or i.Sender in userprofile.chatters.all():
-            message_notifications += 1
+    message_notifications = msgs.count
     if request.method == 'POST':
         form_data = msg(request.POST, request.FILES)
         if form_data.is_valid():
@@ -338,15 +332,8 @@ def group_chat(request, slug):
     unread_messages = group_message.objects.filter(group=group)
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
-    message_notifications = 0
-    for i in msgs:
-        if i.Sender in userprofile.friends.all() or i.Sender in userprofile.chatters.all():
-            message_notifications += 1
-    for i in unread_messages:
-        if userprofile not in i.readers.all():
-            i.readers.add(userprofile)
-        else:
-            pass
+    message_notifications = msgs.count
+    unread_messages.exclude(readers=userprofile).update(readers=userprofile)
     if request.method == "POST":
         form = Group_msg(request.POST, request.FILES)
         if form.is_valid():
@@ -466,10 +453,7 @@ def group_msg_rely(request, slug, msgid):
     profiles = Filter.qs
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
-    message_notifications = 0
-    for i in msgs:
-        if i.Sender in userprofile.friends.all() or i.Sender in userprofile.chatters.all():
-            message_notifications += 1
+    message_notifications = msgs.count
     if request.method == "POST":
         form = Group_msg(request.POST, request.FILES)
         if form.is_valid():
