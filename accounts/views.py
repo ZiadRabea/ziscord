@@ -133,10 +133,7 @@ def chat(request, slug):
     message.objects.filter(receiver=userprofile, Sender=profileid).update(read=True, sent=True)
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
-    message_notifications = 0
-    for i in msgs:
-        if i.Sender in userprofile.friends.all() or i.Sender in userprofile.chatters.all():
-            message_notifications += 1
+    message_notifications = msgs.count
     if request.method == 'POST':
         form_data = msg(request.POST, request.FILES)
         if form_data.is_valid():
