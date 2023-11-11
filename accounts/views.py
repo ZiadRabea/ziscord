@@ -63,8 +63,8 @@ def start(request):
 
 @login_required
 def main(request):
-    profiles = profile.objects.all()
     userprofile = profile.objects.get(user=request.user)
+    profiles = profile.objects.filter(interest=userprofile.interest)
     groups = Group.objects.all()
     group_messages = group_message.objects.all()
     mymessage = message.objects.filter(receiver=userprofile)
@@ -72,14 +72,14 @@ def main(request):
     Filter = Search(request.GET, queryset=profiles)
     profiles = Filter.qs
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
-    my_messages = Msg.count
+    my_messages = Msg.count()
     context = {
         "profile": userprofile,
         "groups": groups,
         "profiles": profiles,
         'filter': Filter,
         'messages': my_messages,
-        'all_messages': mymessage,
+        'all_messages': Msg,
         'notifications': notifications,
         'group_messages': group_messages
     }
@@ -130,7 +130,7 @@ def chat(request, slug):
     message.objects.filter(receiver=userprofile, Sender=profileid).update(read=True, sent=True)
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
-    message_notifications = msgs.count
+    message_notifications = msgs.count()
     if request.method == 'POST':
         form_data = msg(request.POST, request.FILES)
         if form_data.is_valid():
@@ -156,7 +156,7 @@ def chat(request, slug):
         'notifications': notifications,
         'group_messages': group_messages
     }
-    print(message_notifications)
+    #print(message_notifications)
     return render(request, 'accounts/Chat.html', context)
 
 
@@ -333,7 +333,7 @@ def group_chat(request, slug):
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
     message_notifications = msgs.count
-    unread_messages.exclude(readers=userprofile).update(readers=userprofile)
+    unread_messages.exclude(readers=userprofile)
     if request.method == "POST":
         form = Group_msg(request.POST, request.FILES)
         if form.is_valid():
