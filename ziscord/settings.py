@@ -23,7 +23,7 @@ DEFAULT_CHARSET = 'utf-8'
 SECRET_KEY = 'aa++mx%th3^n11_a-uyy4^31*ty3s!u-sm@o34#3f&wkn#nx1$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [".vercel.app"]
 
