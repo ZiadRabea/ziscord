@@ -27,7 +27,11 @@
             <div class="user-profile" style="position:relative;margin-right:20px" onclick="window.open('/accounts/profile/Notifications')"><i class="fas fa-bell" style="font-size:30px"></i>
                {%if notifications%} <sub style="color:white; background:red; border-radius:5px; padding:2px;position:absolute; top:-10px;right:-3px;font-size:10px;">{{notifications.count}}</sub>{%endif%}
             </div>
-            <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{{profile.image.url}}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
+            {%if profile.image%}
+                <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{{profile.image.url}}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
+            {%else%}
+                <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{%static 'profileimg.png'%}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
+            {%endif%}
         </div>
     </header>
 
