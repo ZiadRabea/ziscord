@@ -76,22 +76,22 @@ WSGI_APPLICATION = 'ziscord.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'railway',
-#         'USER': 'postgres',
-#         'PASSWORD':'45GdAaA5E2DFbdgCg-ddb6g62Cc2dA3d',
-#         'HOST': 'roundhouse.proxy.rlwy.net',
-#         'PORT':'38627',
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD':'45GdAaA5E2DFbdgCg-ddb6g62Cc2dA3d',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT':'38627',
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
