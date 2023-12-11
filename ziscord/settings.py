@@ -95,8 +95,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-db = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db)
+DATABASES["default"] = dj_database_url.parse("postgres://ziscorddb_user:oAUfxUecameGKFYqoDpHjT2Zj80zJ6ed@dpg-clrkomh46foc739eupk0-a.oregon-postgres.render.com/ziscorddb")
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
