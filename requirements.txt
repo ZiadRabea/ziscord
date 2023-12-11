@@ -28,6 +28,7 @@ msgpack==1.0.2
 pefile==2019.4.18
 Pillow==8.1.0
 portalocker==2.3.0
+psycopg2==2.9.9
 psycopg2-binary==2.8.6
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
