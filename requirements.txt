@@ -35,6 +35,7 @@ pycparser==2.20
 pyOpenSSL==20.0.1
 python-dateutil==2.8.1
 pytz==2020.4
+gunicorn==21.2.0
 redis==3.5.3
 requests==2.25.1
 service-identity==18.1.0
