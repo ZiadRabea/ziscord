@@ -24,14 +24,12 @@
                     <button class="btn_search">🔎</button>
                 </div>
             </form>
-            <div class="user-profile" style="position:relative;margin-right:20px" onclick="window.open('/accounts/profile/Notifications')"><i class="fas fa-bell" style="font-size:30px"></i>
+            <!-- notifications -->
+            <div class="user-profile" id="notification_div" style="position:relative;margin-right:20px" onclick="window.open('/accounts/profile/Notifications')"><i class="fas fa-bell" style="font-size:30px"></i>
                {%if notifications%} <sub style="color:white; background:red; border-radius:5px; padding:2px;position:absolute; top:-10px;right:-3px;font-size:10px;">{{notifications.count}}</sub>{%endif%}
             </div>
-            {%if profile.image%}
-                <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{{profile.image.url}}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
-            {%else%}
-                <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{%static 'profileimg.png'%}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
-            {%endif%}
+            <!-- notifications -->
+            <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{{profile.image.url}}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
         </div>
     </header>
 
@@ -77,11 +75,11 @@
                                     <span style="color:red"> Offline </span>
                                 {%endif%}
                                     <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
-<!--                                {%for m in all_messages.all%}-->
-<!--                                    {%if m.Sender == i and m.sent == False%}-->
-<!--                                        <span style="color:red;margin-left:20%;">* you have new message(s)</span>-->
-<!--                                    {%endif%}-->
-<!--                                {%endfor%}-->
+                                {%for m in all_messages.all%}
+                                    {%if m.Sender == i and m.sent == False%}
+                                        <span style="color:red;margin-left:20%;">* you have new message(s)</span>
+                                    {%endif%}
+                                {%endfor%}
                                 <br>
                             </div>
                         </a>
@@ -102,9 +100,9 @@
                                 {%endif%}
                                 {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
                                     <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
-<!--                                {%for m in all_messages.all%}-->
-<!--                                    <span style="color:red;margin-left:20%;">* you have {{my_messages}} new message(s)</span>-->
-<!--                                {%endfor%}-->
+                                {%for m in all_messages.all%}
+                                    <span style="color:red;margin-left:20%;">* you have {{my_messages}} new message(s)</span>
+                                {%endfor%}
                                 <br>
                                 <a href="/Ziscord/profile/{{i.slug}}/delete_chat"><button class="buttonA" style="background:orangered;font-size:17px;">remove chat</button></a>
                             </div>
@@ -135,13 +133,13 @@
                     {%endif%}
                     <a href = "/accounts/group/{{g.slug}}/info"><button style="float:right;margin-top:7px; width:auto;background:#ddd;box-shadow:3px 3px 12px 1px inset;border-radius:10px;border:2px groove;" class="L_button">owned</button></a>
                     <span style="font-weight: bold">{{g.group_name}}</span><br>
-<!--                {%for m in group_messages.all%}-->
-<!--                    {%if m.group == g and profile not in m.readers.all%}-->
-<!--                        <script>-->
-<!--                            document.getElementById("span{{g.id}}").style.display = "block"-->
-<!--                        </script>-->
-<!--                    {%endif%}-->
-<!--                {%endfor%}-->
+                {%for m in group_messages.all%}
+                    {%if m.group == g and profile not in m.readers.all%}
+                        <script>
+                            document.getElementById("span{{g.id}}").style.display = "block"
+                        </script>
+                    {%endif%}
+                {%endfor%}
            </div>
            </a>
                {%endif%}
@@ -187,13 +185,13 @@
                 {%endif%}
                  <a href="/accounts/group/{{g.slug}}/join"><button style="float:right;margin-top:7px; width:auto;background:lightblue;box-shadow:3px 3px 12px 1px inset;border-radius:10px" class="L_button">Join</button></a>
                 <span style="font-weight: bold">{{g.group_name}}</span><br>
-<!--                {%for m in g.group_message_set.all%}-->
-<!--                    {%if m.group == g and profile not in m.readers.all%}-->
-<!--                        <script>-->
-<!--                            document.getElementById("span{{g.id}}").style.display = "block"-->
-<!--                        </script>-->
-<!--                    {%endif%}-->
-<!--                {%endfor%}-->
+                {%for m in g.group_message_set.all%}
+                    {%if m.group == g and profile not in m.readers.all%}
+                        <script>
+                            document.getElementById("span{{g.id}}").style.display = "block"
+                        </script>
+                    {%endif%}
+                {%endfor%}
             </div></a>
                {%endif%}
                {%endif%}

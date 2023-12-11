@@ -137,11 +137,7 @@
             <div class="user-profile" style="position:relative;margin-right:20px" onclick="window.open('/accounts/profile/Notifications')"><i class="fas fa-bell" style="font-size:30px"></i>
                {%if notifications%} <sub style="color:white; background:red; border-radius:5px; padding:2px;position:absolute; top:-10px;right:-3px;font-size:10px;">{{notifications.count}}</sub>{%endif%}
             </div>
-            {%if profile.image%}
-                <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{{profile.image.url}}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
-            {%else%}
-                <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{%static 'profileimg.png'%}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
-            {%endif%}
+            <div class="user-profile" onclick="window.open('/accounts/{{profile.slug}}')"><img src="{{profile.image.url}}" onerror="this.src='{%static 'profileimg.png'%}'" width="40" height="40" style="border-radius: 50%;"></div>
         </div>
     </header>
 
@@ -187,11 +183,11 @@
                                     <span style="color:red"> Offline </span>
                                 {%endif%}
                                     <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
-<!--                                {%for m in all_messages.all%}-->
-<!--                                    {%if m.Sender == i and m.sent == False%}-->
-<!--                                        <span style="color:red;margin-left:20%;">* you have new message(s)</span>-->
-<!--                                    {%endif%}-->
-<!--                                {%endfor%}-->
+                                {%for m in all_messages.all%}
+                                    {%if m.Sender == i and m.sent == False%}
+                                        <span style="color:red;margin-left:20%;">* you have new message(s)</span>
+                                    {%endif%}
+                                {%endfor%}
                                 <br>
                             </div>
                         </a>
@@ -212,9 +208,9 @@
                                 {%endif%}
                                 {%if i.online == True%}<span style="color:lightgreen">Online</span>{%else%}<span style="color:red"> Offline </span>{%endif%}
                                     <h3 style="display: inline-block;float: right; margin-top: 27px;">{{i.user.first_name}}</h3>
-<!--                                {%for m in all_messages.all%}-->
-<!--                                    <span style="color:red;margin-left:20%;">* you have {{my_messages}} new message(s)</span>-->
-<!--                                {%endfor%}-->
+                                {%for m in all_messages.all%}
+                                    <span style="color:red;margin-left:20%;">* you have {{my_messages}} new message(s)</span>
+                                {%endfor%}
                                 <br>
                                 <a href="/Ziscord/profile/{{i.slug}}/delete_chat"><button class="buttonA" style="background:orangered;font-size:17px;">remove chat</button></a>
                             </div>
@@ -230,28 +226,30 @@
         <!-- groups aside -->
 
         <aside class="G_aside" id="G_aside">
-            <h1 style = "text-align: center; color:orange; text-shadow: 1px 1px 2px red, 0 0 1em red, 0 0 0.2em orange;">
+            <h1 style = "text-align: center; color:orange; text-shadow: 1px 1px 2px red, 0 0 1em red, 0 0 0.2em orange;margin-bottom:0">
             groups in your manage <span id = h_id>X</span>
             </h1>
             <hr>
             {%for g in groups%}
                 {%if g.admin == profile%}
-                     <a href="/accounts/group/{{g.slug}}"> <div style="margin-bottom:10px;border-bottom: 3px #eee groove;padding-bottom:5px;">
+                     <a href="/accounts/group/{{g.slug}}" style="text-align:center"> <div style="margin-bottom:10px;border-bottom: 3px #eee groove;padding-bottom:5px;display:flex;justify-content: space-between;align-items:center">
                      <span style="color:red;margin-left:20%;display:none" id="span{{g.id}}">* you have new message(s)</span>
                     {%if g.group_image != "" %}
                         <img src="{{g.group_image.url}}" width="50" height="50" class="friend_img" onerror="this.src='{%static 'group.png'%}'">
                     {%else%}
                         <img src="{%static 'group.png'%}" width="50" height="50" class="friend_img">
                     {%endif%}
-                    <a href = "/accounts/group/{{g.slug}}/info"><button style="float:right;margin-top:7px; width:auto;background:#ddd;box-shadow:3px 3px 12px 1px inset;border-radius:10px;border:2px groove;" class="L_button">owned</button></a>
-                    <span style="font-weight: bold">{{g.group_name}}</span><br>
-<!--                {%for m in group_messages.all%}-->
-<!--                    {%if m.group == g and profile not in m.readers.all%}-->
-<!--                        <script>-->
-<!--                            document.getElementById("span{{g.id}}").style.display = "block"-->
-<!--                        </script>-->
-<!--                    {%endif%}-->
-<!--                {%endfor%}-->
+                         <br>
+                         <span style="font-weight: bold; color: white">{{g.group_name}}</span><br>
+                     <a href = "/accounts/group/{{g.slug}}/info"><button style="float:right;margin-top:7px; width:auto;background:#ddd;box-shadow:3px 3px 12px 1px inset;border-radius:10px;border:2px groove;" class="L_button">owned</button></a>
+
+                {%for m in group_messages.all%}
+                    {%if m.group == g and profile not in m.readers.all%}
+                        <script>
+                            document.getElementById("span{{g.id}}").style.display = "block"
+                        </script>
+                    {%endif%}
+                {%endfor%}
            </div>
            </a>
                {%endif%}
@@ -297,13 +295,13 @@
                 {%endif%}
                  <a href="/accounts/group/{{g.slug}}/join"><button style="float:right;margin-top:7px; width:auto;background:lightblue;box-shadow:3px 3px 12px 1px inset;border-radius:10px" class="L_button">Join</button></a>
                 <span style="font-weight: bold">{{g.group_name}}</span><br>
-<!--                {%for m in g.group_message_set.all%}-->
-<!--                    {%if m.group == g and profile not in m.readers.all%}-->
-<!--                        <script>-->
-<!--                            document.getElementById("span{{g.id}}").style.display = "block"-->
-<!--                        </script>-->
-<!--                    {%endif%}-->
-<!--                {%endfor%}-->
+                {%for m in g.group_message_set.all%}
+                    {%if m.group == g and profile not in m.readers.all%}
+                        <script>
+                            document.getElementById("span{{g.id}}").style.display = "block"
+                        </script>
+                    {%endif%}
+                {%endfor%}
             </div></a>
                {%endif%}
                {%endif%}
@@ -311,14 +309,14 @@
                <a href="/accounts/groups/create"> <button class="L_button" style="box-shadow:3px 3px 12px 1px inset;">Create you own 😉</button></a>
             </aside>
          <div class="msg_div" id = "msg_div">
-        <header style="margin-bottom: 3px; border-bottom: 3px groove;background:#eee;height:65px">
-               <a href="/accounts/group/{{receiver.slug}}/info"><h1 style="margin:0;">
+        <header style="margin-bottom: 3px; border-bottom: 3px groove;background:#eee;height:auto">
+               <a href="/accounts/group/{{receiver.slug}}/info"><h1 style="margin:0;display:flex">
                     {%if receiver.group_image != ""%}
-                <img src="{{receiver.group_image.url}}" style="border-radius: 500px;" width="50" height="50" onerror="this.src='{%static 'group.png'%}'">
+                <img src="{{receiver.group_image.url}}" style="border-radius: 500px; margin-right:5px; margin-left:10px" width="50" height="50" onerror="this.src='{%static 'group.png'%}'">
                     {%else%}
-                <img src="{%static 'group.png'%}" style="border-radius: 500px;" width="50" height="50">
+                <img src="{%static 'group.png'%}" style="border-radius: 500px; margin-right:5px; margin-left:10px" width="50" height="50">
                     {%endif%}
-                    <span style="float:right;margin-top:10px;">{{receiver.group_name}}</span>
+                    <span style="float:right;margin-top:10px;font-size:25px;background: -webkit-linear-gradient(60deg, #000, green, red, white); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{receiver.group_name}}</span>
             </h1></a>
             </header>
             <div id="msgs">
