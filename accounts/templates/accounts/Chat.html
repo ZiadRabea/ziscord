@@ -509,6 +509,8 @@
             left: 0,
             top: getOffSet
           });
+        </script>
+          <script>
           const scrollableDiv = document.getElementById('msg_div');
           const scrollSwitch = document.getElementById('scrollSwitch');
           let intervalId;
@@ -526,11 +528,11 @@
               scrollSwitch.style.textShadow = '0 0 5px #0dcaf0';
               }
           });
-
           function scrollToBottom() {
               // Use scrollTop property of the targeted div
               scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
           }   
+        
         </script>
         <script src="{% static 'js/jquery.js' %}"></script>
         <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
