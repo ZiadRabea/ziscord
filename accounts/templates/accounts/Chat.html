@@ -317,7 +317,7 @@
                    </h1>
                </a>
             </header>
-            <div id="msgs">
+            <div id="msgs" id="msgs">
                 <!-- messages div -->
                 {%for msg in messages%}
                     {%if msg.receiver == profile and msg.Sender == receiver%}
@@ -511,7 +511,7 @@
           });
         </script>
           <script>
-          const scrollableDiv = document.getElementById('msg_div');
+          const scrollableDiv = document.getElementById('msgs');
           const scrollSwitch = document.getElementById('scrollSwitch');
           let intervalId;
 
@@ -523,7 +523,6 @@
               scrollSwitch.style.textShadow = 'none';
               } else {
               intervalId = setInterval(scrollToBottom, 100);
-              scrollSwitch.innerText = 'Release Scroll Bar';
               scrollSwitch.style.color = '#0dcaf0';
               scrollSwitch.style.textShadow = '0 0 5px #0dcaf0';
               }
