@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .Forms import SignUP, groupform, msg, Group_msg, UserF, ProfileF
 from.models import profile, Group, group_message, Notification, message
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .filters import Search
 import time
 
@@ -127,6 +128,14 @@ def chat(request, slug):
     profileid = profile.objects.get(slug=slug)
     userprofile = profile.objects.get(user=request.user)
     Msg = message.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(Msg, 14)
+    try:
+        Msg = paginator.page(page)
+    except PageNotAnInteger:
+        Msg = paginator.page(1)
+    except EmptyPage:
+        Msg = paginator.page(paginator.num_pages)
     message.objects.filter(receiver=userprofile, Sender=profileid).update(read=True, sent=True)
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
@@ -171,6 +180,14 @@ def msg_reply(request, slug, msgid):
     profileid = profile.objects.get(slug=slug)
     userprofile = profile.objects.get(user=request.user)
     Msg = message.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(Msg, 14)
+    try:
+        Msg = paginator.page(page)
+    except PageNotAnInteger:
+        Msg = paginator.page(1)
+    except EmptyPage:
+        Msg = paginator.page(paginator.num_pages)
     message.objects.filter(receiver=userprofile, Sender=profileid).update(read=True, sent=True)
     msgs = message.objects.filter(receiver=userprofile, sent=False)
     notifications = Notification.objects.filter(reciever=userprofile, read=False)
@@ -324,6 +341,14 @@ def group_chat(request, slug):
     group = Group.objects.get(slug=slug)
     userprofile = profile.objects.get(user=request.user)
     messages = group_message.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(messages, 14)
+    try:
+        messages = paginator.page(page)
+    except PageNotAnInteger:
+        messages = paginator.page(1)
+    except EmptyPage:
+        messages = paginator.page(paginator.num_pages)
     profiles = profile.objects.all()
     chats = message.objects.all()
     groups = Group.objects.all()
@@ -446,6 +471,14 @@ def group_msg_rely(request, slug, msgid):
     group = Group.objects.get(slug=slug)
     userprofile = profile.objects.get(user=request.user)
     messages = group_message.objects.all()
+    page = request.GET.get('page', 1)
+    paginator = Paginator(messages, 14)
+    try:
+        messages = paginator.page(page)
+    except PageNotAnInteger:
+        messages = paginator.page(1)
+    except EmptyPage:
+        messages = paginator.page(paginator.num_pages)    
     profiles = profile.objects.all()
     chats = message.objects.all()
     groups = Group.objects.all()

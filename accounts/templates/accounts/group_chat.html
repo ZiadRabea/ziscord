@@ -324,7 +324,7 @@
                 {%for msg in messages%}
                 {%if msg.group == receiver and msg.sender != profile%}
                 {%if msg.reply != none%}
-              <div style="width:100%"><a href="#{{msg.reply.id}}"><div style="opacity:0.7;background:#fff; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;max-width:90%;margin-bottom:0;">
+              <div style="width:100%" class="infinite-item"><a href="#{{msg.reply.id}}"><div style="opacity:0.7;background:#fff; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;max-width:90%;margin-bottom:0;">
                   {%if msg.reply.sender == profile%}<span style="color:lightgreen">replied to you</span> {%elif msg.reply.sender != profile and msg.reply.sender != msg.sender%} <span style="color:orangered">replied to {{msg.reply.sender.user.first_name}}</span> {%else%}<span style="color:orangered"> repied to himself </span> {%endif%}<br/>
                   <pre style="float: left;margin: 0;word-wrap:break-word;max-width:100%;white-space:pre-wrap">
                   {{msg.reply.message}}{%if msg.reply.file != ""%}<br><br>Uploaded file {%endif%}</pre><div style="clear: both"></div>
@@ -362,6 +362,13 @@
                    {%endif%}
                     <span style="font-size: 10px;float: left;margin-top: 15px;">{{msg.date|date:'P'}}</span></div></div>
                 {%endif%}
+                {% if messages.has_next %}
+                    <a class="infinite-more-link" href="?page={{ messages.next_page_number }}">More</a>
+                {% endif %}
+                <div class="loading" style="display:none;">
+                    Loading...
+                </div>
+                {%endfor%}
                 {%endfor%}
                 <!-- messages div -->
             </div>
@@ -501,6 +508,20 @@
             left: 0,
             top: getOffSet
           });
+        </script>
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'js/infinite.min.js' %}"></script>
+        <script>
+          var infinite = new Waypoint.Infinite({
+            element: $('.msgs')[0],
+            onBeforePageLoad: function () {
+                $('.loading').show();
+            },
+            onAfterPageLoad: function ($items) {
+                $('.loading').hide();
+            }
+        });
         </script>
     </body>
 </html>

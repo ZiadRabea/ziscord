@@ -322,7 +322,7 @@
                 {%for msg in messages%}
                     {%if msg.receiver == profile and msg.Sender == receiver%}
                         {%if msg.reply != none%}
-                            <div style="width:100%">
+                            <div style="width:100%"  class="infinite-item">
                                 <a href="#{{msg.reply.id}}">
                                     <div style="opacity:0.7;background:#fff; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;max-width:90%;margin-bottom:0;">
                                         {%if msg.reply.Sender == profile%}
@@ -356,13 +356,19 @@
                                {%endif%}
                             </div>
                             </div>
-                {%endif%}
+                        {%endif%}
                 <div style="width:100%; text-align: right" id="{{msg.id}}" ><div ondblclick="h_s('{{msg.id}}')" onclick="copy_msg(msg{{msg.id}})"  style="background: #99f; color:black; width:auto;display: inline-block; word-wrap: break-word;height: auto;margin: 20px;padding: 10px; border-radius: 20px; min-width: 55px;max-width:90%;height:auto;margin-top:0;"><pre id="msg{{msg.id}}" style="float: left;margin: 0;word-wrap:break-word;max-width:100%;white-space:pre-wrap;">{{msg.message}} {%if msg.file != ""%}<br><br><a style="color:lightgreen" href="{{msg.file.url}}">Uploaded file</a> {%endif%}</pre><div style="clear: both"></div>
                     {%if msg.image != ""%}
                     <br/><img src="{{msg.image.url}}" width="150" height="200"><br>
                    {%endif%}
                     <span style="font-size: 10px;float: left;margin-top: 15px;">{{msg.Date|date:'P'}}</span> {%if msg.read == True%}<span style="font-size: 8px;float: right;margin-top: 15px; color:darkgreen">✔✔</span>{%endif%}</div></div>
                 {%endif%}
+                {% if messages.has_next %}
+                    <a class="infinite-more-link" href="?page={{ messages.next_page_number }}">More</a>
+                {% endif %}
+                <div class="loading" style="display:none;">
+                    Loading...
+                </div>
                 {%endfor%}
                 <!-- messages div -->
             </div>
@@ -502,6 +508,21 @@
             left: 0,
             top: getOffSet
           });
+        </script>
+        <script src="{% static 'js/jquery.js' %}"></script>
+        <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+        <script src="{% static 'js/infinite.min.js' %}"></script>
+        <script>
+          var infinite = new Waypoint.Infinite({
+            element: $('.msgs')[0],
+            onBeforePageLoad: function () {
+                $('.loading').show();
+            },
+            onAfterPageLoad: function ($items) {
+                $('.loading').hide();
+            }
+        });
+        </script>
         </script>
     </body>
 </html>
