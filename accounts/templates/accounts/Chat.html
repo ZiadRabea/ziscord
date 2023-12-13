@@ -510,28 +510,26 @@
             top: getOffSet
           });
           document.addEventListener('DOMContentLoaded', function() {
-          const scrollSwitch = document.getElementById('scrollSwitch');
-          let intervalId;
+            const scrollableDiv = document.getElementById('msg_div');
+            const scrollSwitch = document.getElementById('scrollSwitch');
+            let intervalId;
 
-          scrollSwitch.addEventListener('click', function() {
-            if (intervalId) {
-            // If intervalId is defined, clear the interval
-            clearInterval(intervalId);
-            intervalId = null;
-            scrollSwitch.style.color = 'Blue';
-            scrollSwitch.style.textShadow = 'none';
-            } else {
-            // If intervalId is not defined, set the interval
-            intervalId = setInterval(scrollToBottom, 100);
-            scrollSwitch.style.color = '#0dcaf0';
-            scrollSwitch.style.textShadow = '0 0 5px #0dcaf0';
+            scrollSwitch.addEventListener('click', function() {
+                if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+                scrollSwitch.innerText = 'Stick Scroll Bar';
+                } else {
+                intervalId = setInterval(scrollToBottom, 100);
+                scrollSwitch.innerText = 'Release Scroll Bar';
+                }
+            });
+
+            function scrollToBottom() {
+                // Use scrollTop property of the targeted div
+                scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
             }
-          });
-
-          function scrollToBottom() {
-            window.scrollTo(0, document.body.scrollHeight);
-          }
-          });        
+            });        
         </script>
         <script src="{% static 'js/jquery.js' %}"></script>
         <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
