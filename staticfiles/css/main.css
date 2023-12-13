@@ -324,6 +324,7 @@ width:70%;
 #emoji_div{
  margin-left:15%
  }
+}
 @media screen and (max-width: 820px){
 #R_M{
     margin-left:10%;
@@ -339,6 +340,7 @@ width:70%;
 #emoji_div{
     margin-left:5%
  }
+}
 @media screen and (max-width: 670px){
 #R_M{
     margin-left:0;
