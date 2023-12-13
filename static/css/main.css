@@ -12,6 +12,23 @@ html, body{
 body{
     background: #444;
 }
+.down{
+    position: fixed;
+    top: 75%;
+    right: 10%;
+    font-size: 25px;
+    color: #0dcaf0;
+    background-color: #343a40;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    text-shadow: 0 0 5px #0dcaf0;
+    display: none;
+}
 a{
 text-decoration:none;
 color:black
