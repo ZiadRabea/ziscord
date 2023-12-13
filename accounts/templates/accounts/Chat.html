@@ -363,12 +363,12 @@
                    {%endif%}
                     <span style="font-size: 10px;float: left;margin-top: 15px;">{{msg.Date|date:'P'}}</span> {%if msg.read == True%}<span style="font-size: 8px;float: right;margin-top: 15px; color:darkgreen">✔✔</span>{%endif%}</div></div>
                 {%endif%}
-                {% if messages.has_next %}
+                <!-- {% if messages.has_next %}
                     <a class="infinite-more-link" href="?page={{ messages.next_page_number }}">More</a>
                 {% endif %}
                 <div class="loading" style="display:none;">
                     Loading...
-                </div>
+                </div> -->
                 {%endfor%}
                 <!-- messages div -->
             </div>
@@ -512,7 +512,7 @@
         <script src="{% static 'js/jquery.js' %}"></script>
         <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
         <script src="{% static 'js/infinite.min.js' %}"></script>
-        <script>
+        <!-- <script>
           var infinite = new Waypoint.Infinite({
             element: $('.msgs')[0],
             onBeforePageLoad: function () {
@@ -522,7 +522,7 @@
                 $('.loading').hide();
             }
         });
-        </script>
+        </script> -->
         </script>
     </body>
 </html>
