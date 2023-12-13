@@ -509,30 +509,28 @@
             left: 0,
             top: getOffSet
           });
-          document.addEventListener('DOMContentLoaded', function() {
-            const scrollableDiv = document.getElementById('msg_div');
-            const scrollSwitch = document.getElementById('scrollSwitch');
-            let intervalId;
+          const scrollableDiv = document.getElementById('msg_div');
+          const scrollSwitch = document.getElementById('scrollSwitch');
+          let intervalId;
 
-            scrollSwitch.addEventListener('click', function() {
-                if (intervalId) {
-                clearInterval(intervalId);
-                intervalId = null;
-                scrollSwitch.style.color = 'blue';
-                scrollSwitch.style.textShadow = 'none';
-                } else {
-                intervalId = setInterval(scrollToBottom, 100);
-                scrollSwitch.innerText = 'Release Scroll Bar';
-                scrollSwitch.style.color = '#0dcaf0';
-                scrollSwitch.style.textShadow = '0 0 5px #0dcaf0';
-                }
-            });
+          scrollSwitch.addEventListener('click', function() {
+              if (intervalId) {
+              clearInterval(intervalId);
+              intervalId = null;
+              scrollSwitch.style.color = 'blue';
+              scrollSwitch.style.textShadow = 'none';
+              } else {
+              intervalId = setInterval(scrollToBottom, 100);
+              scrollSwitch.innerText = 'Release Scroll Bar';
+              scrollSwitch.style.color = '#0dcaf0';
+              scrollSwitch.style.textShadow = '0 0 5px #0dcaf0';
+              }
+          });
 
-            function scrollToBottom() {
-                // Use scrollTop property of the targeted div
-                scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
-            }
-            });        
+          function scrollToBottom() {
+              // Use scrollTop property of the targeted div
+              scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
+          }   
         </script>
         <script src="{% static 'js/jquery.js' %}"></script>
         <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
